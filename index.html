@@ -97,6 +97,7 @@
 
             updateWordDisplay();
             clearCanvas();
+            drawHangman();
             createKeyboard();
         }
 
@@ -137,9 +138,9 @@
 
         function updateWordDisplay() {
             const display = selectedWord
-                .split("")
-                .map((letter) => (guessedLetters.includes(letter) ? letter : "_"))
-                .join(" ");
+                .split("") // Split word into array of letters
+                .map((letter) => (guessedLetters.includes(letter) ? letter : "_")) // Replace unguessed letters with "_"
+                .join(" "); // Join letters back into a string
             document.getElementById("word-display").innerText = display;
         }
 
@@ -156,7 +157,6 @@
             ctx.lineWidth = 2;
             ctx.strokeStyle = "#000";
 
-            // Draw hangman parts based on wrong guesses
             if (wrongGuesses === 1) ctx.strokeRect(50, 350, 100, 10); // Base
             if (wrongGuesses === 2) ctx.strokeRect(90, 50, 10, 300); // Pole
             if (wrongGuesses === 3) ctx.strokeRect(90, 50, 80, 10);  // Top bar

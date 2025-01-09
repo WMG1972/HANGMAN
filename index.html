@@ -3,32 +3,43 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Sports HANGman by HANG Media</title>
+    <title>HANGfan - A Sports-Themed Hangman Game</title>
     <style>
+        /* General styles */
         body {
             font-family: Arial, sans-serif;
             text-align: center;
-            background-color: #f4f4f4;
+            background-image: url('background.jpg'); /* Replace with your background image */
+            background-size: cover;
+            background-position: center;
             margin: 0;
             padding: 0;
+            color: #333;
         }
 
         header {
-            background-color: #333;
+            background-color: rgba(0, 0, 0, 0.8);
             color: white;
             padding: 1em;
+            background-image: url('header-banner.jpg'); /* Add your banner image */
+            background-size: cover;
+            background-position: center;
         }
 
         main {
             margin: 2em auto;
-            max-width: 600px;
+            max-width: 800px;
+            background-color: rgba(255, 255, 255, 0.9);
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            padding: 1em;
         }
 
         #hangman-canvas {
             display: block;
-            margin: 0 auto;
-            border: 1px solid #ccc;
-            background: white;
+            margin: 0 auto 1em auto;
+            border: 2px solid #ccc;
+            background-color: white;
         }
 
         #word-display {
@@ -62,22 +73,43 @@
         footer {
             margin-top: 2em;
             padding: 1em;
-            background-color: #333;
+            background-color: rgba(0, 0, 0, 0.8);
             color: white;
+            background-image: url('footer-banner.jpg'); /* Add a footer banner */
+            background-size: cover;
+            background-position: center;
+        }
+
+        .decorations {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 1em;
+        }
+
+        .decorations img {
+            width: 100px;
+            height: auto;
         }
     </style>
 </head>
 <body>
     <header>
-        <h1>Sports HANGman by HANG Media</h1>
+        <h1>HANGfan - A Sports-Themed Hangman Game</h1>
     </header>
     <main id="game-container">
+        <!-- Add decorative images above the game -->
+        <div class="decorations">
+            <img src="icon1.png" alt="Sports Icon 1"> <!-- Replace with your image -->
+            <img src="icon2.png" alt="Sports Icon 2">
+            <img src="icon3.png" alt="Sports Icon 3">
+        </div>
+
         <canvas id="hangman-canvas" width="200" height="400"></canvas>
         <div id="word-display"></div>
         <div id="keyboard"></div>
     </main>
     <footer>
-        <p>&copy; 2025 HANG Media</p>
+        <p>&copy; 2025 HANGfan | All Rights Reserved</p>
     </footer>
     <script>
         const wordBank = {
@@ -180,3 +212,4 @@
     </script>
 </body>
 </html>
+

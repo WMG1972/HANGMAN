@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sports HANGman by HANG Media</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 0;
+        }
+
+        header {
+            background-color: #333;
+            color: white;
+            padding: 1em;
+        }
+
+        main {
+            margin: 2em auto;
+            max-width: 600px;
+        }
+
+        #hangman-drawing {
+            height: 200px;
+            border: 2px dashed #ccc;
+            margin: 1em auto;
+        }
+
+        #word-display {
+            font-size: 2em;
+            letter-spacing: 0.5em;
+            margin: 1em 0;
+        }
+
+        #keyboard {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 0.5em;
+        }
+
+        button {
+            padding: 1em;
+            font-size: 1em;
+            cursor: pointer;
+            border: none;
+            border-radius: 5px;
+            background-color: #007BFF;
+            color: white;
+        }
+
+        button:disabled {
+            background-color: #ccc;
+            cursor: not-allowed;
+        }
+
+        footer {
+            margin-top: 2em;
+            padding: 1em;
+            background-color: #333;
+            color: white;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Sports HANGman by HANG Media</h1>
+    </header>
+    <main id="game-container">
+        <!-- Content will be dynamically generated -->
+    </main>
+    <footer>
+        <p>&copy; 2025 HANG Media</p>
+    </footer>
+    <script>
+        const wordBank = {
+            easy: ["ball", "goal", "team", "sport", "coach"],
+            medium: ["stadium", "athlete", "trophy", "soccer", "cricket"],
+            hard: ["quarterback", "championship", "basketball", "snowboarding"]
+        };
+
+        let selectedWord = "";
+        let guessedLetters = [];
+        let wrongGuesses = 0;
+
+        function initGame(difficulty = "easy") {
+            const gameContainer = document.getElementById("game-container");
+            gameContainer.innerHTML = `
+                <div id="hangman-drawing"></div>
+                <div id="word-display"></div>
+                <div id="keyboard"></div>
+            `;
+
+            selectedWord = wordBank[difficulty][Math.floor(Math.random() * wordBank[difficulty].length)];
+            guessedLetters = [];
+            wrongGuesses = 0;
+
+            updateWordDisplay();
+            drawHangman();
+            createKeyboard();
+        }
+
+        function createKeyboard() {
+            const keyboardDiv = document.getElementById("keyboard");
+            keyboardDiv.innerHTML = "";
+
+            for (let i = 65; i <= 90; i++) {
+                const letter = String.fromCharCode(i);
+                const button = document.createElement("button");
+                button.textContent = letter;
+                button.onclick = () => handleGuess(letter, button);
+                keyboardDiv.appendChild(button);
+            }
+        }
+
+        function handleGuess(letter, button) {
+            button.disabled = true;
+
+            if (guessedLetters.includes(letter)) return;
+            guessedLetters.push(letter);
+
+            if (selectedWord.includes(letter)) {
+                updateWordDisplay();
+            } else {
+                wrongGuesses++;
+                drawHangman();
+            }
+
+            if (wrongGuesses >= 6) {
+                alert(`Game Over! The word was "${selectedWord}".`);
+                initGame();
+            } else if (!document.getElementById("word-display").innerText.includes("_")) {
+                alert("Congratulations! You guessed the word!");
+                initGame();
+            }
+        }
+
+        function updateWordDisplay() {
+            const display = selectedWord
+                .split("")
+                .map((letter) => (guessedLetters.includes(letter) ? letter : "_"))
+                .join(" ");
+            document.getElementById("word-display").innerText = display;
+        }
+
+        function drawHangman() {
+            const hangmanDiv = document.getElementById("hangman-drawing");
+            hangmanDiv.innerText = `Wrong Guesses: ${wrongGuesses}`;
+        }
+
+        // Start the game
+        initGame("easy");
+    </script>
+</body>
+</html>

@@ -91,13 +91,12 @@
         let wrongGuesses = 0;
 
         function initGame(difficulty = "easy") {
-            selectedWord = wordBank[difficulty][Math.floor(Math.random() * wordBank[difficulty].length)];
+            selectedWord = wordBank[difficulty][Math.floor(Math.random() * wordBank[difficulty].length)].toLowerCase(); // Ensure lowercase
             guessedLetters = [];
             wrongGuesses = 0;
 
             updateWordDisplay();
             clearCanvas();
-            drawHangman();
             createKeyboard();
         }
 
@@ -109,7 +108,7 @@
                 const letter = String.fromCharCode(i);
                 const button = document.createElement("button");
                 button.textContent = letter;
-                button.onclick = () => handleGuess(letter, button);
+                button.onclick = () => handleGuess(letter.toLowerCase(), button); // Convert guess to lowercase
                 keyboardDiv.appendChild(button);
             }
         }
@@ -138,10 +137,13 @@
 
         function updateWordDisplay() {
             const display = selectedWord
-                .split("") // Split word into array of letters
-                .map((letter) => (guessedLetters.includes(letter) ? letter : "_")) // Replace unguessed letters with "_"
-                .join(" "); // Join letters back into a string
+                .split("")
+                .map((letter) => (guessedLetters.includes(letter) ? letter : "_"))
+                .join(" ");
             document.getElementById("word-display").innerText = display;
+
+            // Debugging log
+            console.log("Word Display Updated:", display);
         }
 
         function clearCanvas() {

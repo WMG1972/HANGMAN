@@ -5,7 +5,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Sports HANGman by HANG Media</title>
     <style>
-        /* Basic styling remains unchanged */
         body {
             font-family: Arial, sans-serif;
             text-align: center;
@@ -92,14 +91,12 @@
         let wrongGuesses = 0;
 
         function initGame(difficulty = "easy") {
-            const gameContainer = document.getElementById("game-container");
             selectedWord = wordBank[difficulty][Math.floor(Math.random() * wordBank[difficulty].length)];
             guessedLetters = [];
             wrongGuesses = 0;
 
             updateWordDisplay();
             clearCanvas();
-            drawHangman();
             createKeyboard();
         }
 
@@ -159,24 +156,25 @@
             ctx.lineWidth = 2;
             ctx.strokeStyle = "#000";
 
-            // Draw hangman parts based on the number of wrong guesses
-            if (wrongGuesses >= 1) ctx.strokeRect(50, 350, 100, 10); // Base
-            if (wrongGuesses >= 2) ctx.strokeRect(90, 50, 10, 300); // Pole
-            if (wrongGuesses >= 3) ctx.strokeRect(90, 50, 80, 10);  // Top bar
-            if (wrongGuesses >= 4) ctx.strokeRect(160, 50, 10, 50); // Rope
-            if (wrongGuesses >= 5) ctx.beginPath(); // Head
-            if (wrongGuesses >= 5) ctx.arc(165, 120, 20, 0, Math.PI * 2);
-            if (wrongGuesses >= 5) ctx.stroke();
-            if (wrongGuesses >= 6) ctx.beginPath(); // Body
-            if (wrongGuesses >= 6) ctx.moveTo(165, 140);
-            if (wrongGuesses >= 6) ctx.lineTo(165, 240);
-            if (wrongGuesses >= 6) ctx.stroke();
+            // Draw hangman parts based on wrong guesses
+            if (wrongGuesses === 1) ctx.strokeRect(50, 350, 100, 10); // Base
+            if (wrongGuesses === 2) ctx.strokeRect(90, 50, 10, 300); // Pole
+            if (wrongGuesses === 3) ctx.strokeRect(90, 50, 80, 10);  // Top bar
+            if (wrongGuesses === 4) ctx.strokeRect(160, 50, 10, 50); // Rope
+            if (wrongGuesses === 5) {
+                ctx.beginPath();
+                ctx.arc(165, 120, 20, 0, Math.PI * 2); // Head
+                ctx.stroke();
+            }
+            if (wrongGuesses === 6) {
+                ctx.beginPath();
+                ctx.moveTo(165, 140);
+                ctx.lineTo(165, 240); // Body
+                ctx.stroke();
+            }
         }
 
         initGame("easy");
     </script>
 </body>
 </html>
-
-         
-
